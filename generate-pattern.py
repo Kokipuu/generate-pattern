@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def generate_random_circle(radius, x_range, y_range):
     center_x = np.random.uniform(radius, x_range - radius)
     center_y = np.random.uniform(radius, y_range - radius)
