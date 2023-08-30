@@ -118,11 +118,15 @@ time_str = current_datetime.strftime('%H-%M-%S')
 # folder_path = os.path.join(output_directory, output_name)
 
 
+##################################################################################################################
+
+
 if __name__ == '__main__':
 
     WIDTH, HEIGHT = 21, 29.7  # A4サイズ
     X_RANGE, Y_RANGE = 21, 29.7  # 図形位置の乱数範囲
     SEED = 10  # 乱数のseed
+
 
     """変更箇所 start"""
     SHAPE_TYPE = "rectangle"   # 図形の選択
@@ -136,6 +140,7 @@ if __name__ == '__main__':
     ROTATION = False  # 回転する: True, 回転しない: False
     SIZE = False  # ランダムにサイズ変更: True, サイズ一定: False
     """変更箇所 end"""
+
 
     np.random.seed(SEED)  # 乱数のseedを固定
     main_rectangle = GenerateObject(width=WIDTH, height=HEIGHT)  # 図形オブジェクトの作成
@@ -184,3 +189,4 @@ if __name__ == '__main__':
 
     # 生成パターンの保存
     main_rectangle.draw(BG_COLOR, folder_path)
+
