@@ -39,8 +39,9 @@ class GenerateObject:
             print("Unsupported shape type")
 
     # 図形の描画
-    def draw(self, output_path):
+    def draw(self, background_color, output_path):
         fig, ax = plt.subplots(figsize=(self.width, self.height), dpi=100)
+        fig.set_facecolor(background_color)  # 背景色の設定
         ax.set_xlim(0, self.width)
         ax.set_ylim(0, self.height)
         ax.axis("off")
@@ -128,7 +129,7 @@ if __name__ == '__main__':
     NUM = 500  # 図形の個数
     SHAPE_SIZE = 1  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
-    BG_COLOR = "white"  # 背景の色(not defined)
+    BG_COLOR = "gray"  # 背景の色
     ROTATION_MIN = 0  # 回転の最小値 (deg)
     ROTATION_MAX = 90  # 回転の最大値 (deg)
 
@@ -182,4 +183,4 @@ if __name__ == '__main__':
     folder_path = os.path.join(output_directory, output_name)
 
     # 生成パターンの保存
-    main_rectangle.draw(folder_path)
+    main_rectangle.draw(BG_COLOR, folder_path)
