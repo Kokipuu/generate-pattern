@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Rectangle as MatplotlibRectangle, RegularPolygon
 import datetime
+import cv2 as cv
+import overlap_judge
 
 
 class GenerateObject:
@@ -71,8 +73,8 @@ class GenerateObject:
                 ax.add_patch(rect)
 
         plt.gca().set_aspect('equal', adjustable='box')
-        save_graph(output_path)
-    
+        save_and_show_graph(output_path)
+
 
 
 def generate_random_point(x_range, y_range):
@@ -81,8 +83,8 @@ def generate_random_point(x_range, y_range):
     return x, y
 
 
-def genareta_radom_size(size, shape_type):
-    if shape_type == "circle":
+def generate_random_size(size, shape_type):
+    if shape_type == "circle": 
         s = np.random.uniform(0, size)
         return s
     elif shape_type == "triangle":
@@ -96,16 +98,20 @@ def genareta_radom_size(size, shape_type):
         return "Unsupported shape type"
 
 
-def save_graph(output_path):
+def save_and_show_graph(output_path):
+    # print(output_path)
     plt.savefig(output_path)
+    # img = cv.imread(output_path)
+    # cv.imshow('1', img)
+    # cv.waitKey()
 
 
 
-###############################################################################################################
+#######################################################################################################################################
 
 """"保存先のディレクトリ設定"""
 # フォルダを生成するディレクトリのパスを指定
-output_directory = 'C:/Users/puu02/Documents/03_JobHanting/summer_intern/Bosch/programm/generate_pattern/pattern'  # your path
+output_directory = 'C:/Users/puu02/Documents/03_JobHanting/summer_intern/Bosch/programm/generate_pattern/generateAlgorithm/'  # your path
 
 # """生成パターンを日付に指定"""
 # 現在の日付と時間を取得
@@ -125,7 +131,7 @@ if __name__ == '__main__':
 
     WIDTH, HEIGHT = 21, 29.7  # A4サイズ
     X_RANGE, Y_RANGE = 21, 29.7  # 図形位置の乱数範囲
-    SEED = 10  # 乱数のseed
+    SEED = 42  # 乱数のseed
 
 
     """変更箇所 start"""
@@ -137,7 +143,7 @@ if __name__ == '__main__':
     ROTATION_MIN = 0  # 回転の最小値 (deg)
     ROTATION_MAX = 90  # 回転の最大値 (deg)
 
-    ROTATION = False  # 回転する: True, 回転しない: False
+    ROTATION = True  # 回転する: True, 回転しない: False
     SIZE = False  # ランダムにサイズ変更: True, サイズ一定: False
     """変更箇所 end"""
 
@@ -154,16 +160,22 @@ if __name__ == '__main__':
                 angle = 0
             
             if SHAPE_TYPE == "circle":
-                size = genareta_radom_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
+                size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
                 main_rectangle.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
             elif SHAPE_TYPE == "triangle":
-                size = genareta_radom_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
+                size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
                 main_rectangle.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
             elif SHAPE_TYPE == "rectangle":
-                s_width, s_height = genareta_radom_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
+                s_width, s_height = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
                 main_rectangle.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
     
     else: 
+        rect2 = []
+        rect1 = []
+        circle2 = []
+        circle1 = []
+        tri2 = []
+        tri1 = []
         for _ in range(NUM):
             x, y = generate_random_point(X_RANGE, Y_RANGE)  # 図形の位置を一様分布から生成
             if ROTATION:
@@ -171,19 +183,33 @@ if __name__ == '__main__':
             else:
                 angle = 0
 
+
             if SHAPE_TYPE == "circle":
                 size = SHAPE_SIZE
-                main_rectangle.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
+                circle1 = [x, y, size]
+                if(overlap_judge.judge_circle_overlap(circle1, circle2) == False):
+                    main_rectangle.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
+                    circle2.append(circle1)
+                    
             elif SHAPE_TYPE == "triangle":
                 size = SHAPE_SIZE
-                main_rectangle.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
+                d1, d2, d3 = overlap_judge.triangle_get_point(x, y, size)
+                tri1 = [d1, d2, d3]
+                # print(np.sin(60))
+                if(overlap_judge.judge_triangle_overlap(tri1, tri2) == False):
+                    main_rectangle.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
+                    tri2.append(tri1)
+
             elif SHAPE_TYPE == "rectangle":
                 s_width, s_height = SHAPE_SIZE, SHAPE_SIZE
-                main_rectangle.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
+                rect1 = [x, y, s_width, s_height]
+                if(overlap_judge.judge_rect_overlap(rect1, rect2) == False):
+                    main_rectangle.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
+                    rect2.append(rect1)
 
 
     # フォルダ名を生成
-    output_name = f'{SHAPE_TYPE}_p-{PATTERN_COLOR}_bg-{BG_COLOR}_size-{SHAPE_SIZE}_sizerand-{SIZE}_rotationrand-{ROTATION}_{date_str}_{time_str}.png'
+    output_name = f'test.png'
     # 保存先の絶対パスを生成
     folder_path = os.path.join(output_directory, output_name)
 
