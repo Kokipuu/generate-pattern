@@ -278,3 +278,4 @@ if __name__ == '__main__':
     # 生成パターンの保存
     main_object.draw(BG_COLOR, folder_path)
 
+    print("11")
