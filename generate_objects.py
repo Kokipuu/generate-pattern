@@ -191,6 +191,8 @@ if __name__ == '__main__':
                 if(overlap_judge.judge_circle_overlap(circle1, circle2) == OVERLAP):
                     main_rectangle.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
                     circle2.append(circle1)
+                else:
+                    main_rectangle.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
                     
             elif SHAPE_TYPE == "triangle":
                 size = SHAPE_SIZE
@@ -199,6 +201,8 @@ if __name__ == '__main__':
                 if(overlap_judge.judge_triangle_overlap(tri1, tri2) == OVERLAP):
                     main_rectangle.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
                     tri2.append(tri1)
+                else:
+                    main_rectangle.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
 
             elif SHAPE_TYPE == "rectangle":
                 s_width, s_height = SHAPE_SIZE, SHAPE_SIZE
@@ -206,6 +210,8 @@ if __name__ == '__main__':
                 if(overlap_judge.judge_rect_overlap(rect1, rect2) == OVERLAP):
                     main_rectangle.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
                     rect2.append(rect1)
+                else:
+                    main_rectangle.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
 
 
     # フォルダ名を生成
