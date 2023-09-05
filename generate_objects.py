@@ -111,7 +111,7 @@ def save_and_show_graph(output_path):
 
 """"保存先のディレクトリ設定"""
 # フォルダを生成するディレクトリのパスを指定
-output_directory = 'C:/Users/puu02/Documents/03_JobHanting/summer_intern/Bosch/programm/generate_pattern/generateAlgorithm/'  # your path
+output_directory = 'C:/Users/puu02/Documents/03_JobHanting/summer_intern/Bosch/programm/generate_pattern/pattern'  # your path
 
 # """生成パターンを日付に指定"""
 # 現在の日付と時間を取得
@@ -135,9 +135,9 @@ if __name__ == '__main__':
 
 
     """変更箇所 start"""
-    SHAPE_TYPE = "rectangle"   # 図形の選択
+    SHAPE_TYPE = "circle"   # 図形の選択
     NUM = 500  # 図形の個数
-    SHAPE_SIZE = 1  # 図形のサイズ
+    SHAPE_SIZE = 0.5  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
     BG_COLOR = "gray"  # 背景の色
     ROTATION_MIN = 0  # 回転の最小値 (deg)
@@ -145,6 +145,7 @@ if __name__ == '__main__':
 
     ROTATION = True  # 回転する: True, 回転しない: False
     SIZE = False  # ランダムにサイズ変更: True, サイズ一定: False
+    OVERLAP = False  # patternが重ねる: True, 重ならない: False
     """変更箇所 end"""
 
 
@@ -187,7 +188,7 @@ if __name__ == '__main__':
             if SHAPE_TYPE == "circle":
                 size = SHAPE_SIZE
                 circle1 = [x, y, size]
-                if(overlap_judge.judge_circle_overlap(circle1, circle2) == False):
+                if(overlap_judge.judge_circle_overlap(circle1, circle2) == OVERLAP):
                     main_rectangle.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
                     circle2.append(circle1)
                     
@@ -195,21 +196,20 @@ if __name__ == '__main__':
                 size = SHAPE_SIZE
                 d1, d2, d3 = overlap_judge.triangle_get_point(x, y, size)
                 tri1 = [d1, d2, d3]
-                # print(np.sin(60))
-                if(overlap_judge.judge_triangle_overlap(tri1, tri2) == False):
+                if(overlap_judge.judge_triangle_overlap(tri1, tri2) == OVERLAP):
                     main_rectangle.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
                     tri2.append(tri1)
 
             elif SHAPE_TYPE == "rectangle":
                 s_width, s_height = SHAPE_SIZE, SHAPE_SIZE
                 rect1 = [x, y, s_width, s_height]
-                if(overlap_judge.judge_rect_overlap(rect1, rect2) == False):
+                if(overlap_judge.judge_rect_overlap(rect1, rect2) == OVERLAP):
                     main_rectangle.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
                     rect2.append(rect1)
 
 
     # フォルダ名を生成
-    output_name = f'test.png'
+    output_name = f'{SHAPE_TYPE}_p-{PATTERN_COLOR}_bg-{BG_COLOR}_size-{SHAPE_SIZE}_sizerand-{SIZE}_rotationrand-{ROTATION}_{date_str}_{time_str}.png'
     # 保存先の絶対パスを生成
     folder_path = os.path.join(output_directory, output_name)
 
