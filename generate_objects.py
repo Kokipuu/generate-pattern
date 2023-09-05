@@ -145,7 +145,7 @@ if __name__ == '__main__':
 
     ROTATION = True  # 回転する: True, 回転しない: False
     SIZE = False  # ランダムにサイズ変更: True, サイズ一定: False
-    OVERLAP = False  # patternが重ねる: True, 重ならない: False
+    OVERLAP = True  # patternが重ねる: True, 重ならない: False
     """変更箇所 end"""
 
 
