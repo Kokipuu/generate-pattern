@@ -152,123 +152,55 @@ if __name__ == '__main__':
     np.random.seed(SEED)  # 乱数のseedを固定
     main_object = GenerateObject(width=WIDTH, height=HEIGHT)  # 図形オブジェクトの作成
 
+    position_rectangle = []
+
+
     if OVERLAP:
-        if SIZE:
-            rect1, rect2 = [], []
-            circle1, circle2 = [], []
-            tri1, tri2 = [], []
-            for _ in range(NUM):
-                x, y = generate_random_point(X_RANGE, Y_RANGE)  # 図形の位置を一様分布から生成
-                if ROTATION:
-                    angle = np.random.uniform(ROTATION_MIN, ROTATION_MAX)  # 図形の回転を一様分布から生成
-                else:
-                    angle = 0
-                
-                if SHAPE_TYPE == "circle":
-                    size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
-                    main_object.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-
-                elif SHAPE_TYPE == "triangle":
-                    size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
-                    main_object.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-
-                elif SHAPE_TYPE == "rectangle":
-                    s_width, s_height = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
-                    main_object.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
-
-        
-        else: 
-            rect1, rect2 = [], []
-            circle1, circle2 = [], []
-            tri1, tri2 = [], []
-            for _ in range(NUM):
-                x, y = generate_random_point(X_RANGE, Y_RANGE)  # 図形の位置を一様分布から生成
-                if ROTATION:
-                    angle = np.random.uniform(ROTATION_MIN, ROTATION_MAX)  # 図形の回転を一様分布から生成
-                else:
-                    angle = 0
-
-                if SHAPE_TYPE == "circle":
-                    size = SHAPE_SIZE
-                    circle1 = [x, y, size]
-                    main_object.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-                        
-                elif SHAPE_TYPE == "triangle":
-                    size = SHAPE_SIZE
-                    main_object.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-
-                elif SHAPE_TYPE == "rectangle":
-                    s_width, s_height = SHAPE_SIZE, SHAPE_SIZE
-                    main_object.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
+        pass
 
     else:
-        if SIZE:
-            rect1, rect2 = [], []
-            circle1, circle2 = [], []
-            tri1, tri2 = [], []
-            for _ in range(NUM):
-                x, y = generate_random_point(X_RANGE, Y_RANGE)  # 図形の位置を一様分布から生成
-                if ROTATION:
-                    angle = np.random.uniform(ROTATION_MIN, ROTATION_MAX)  # 図形の回転を一様分布から生成
-                else:
-                    angle = 0
-                
-                if SHAPE_TYPE == "circle":
-                    size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
-                    circle1 = [x, y, size]
-                    if(overlap_judge.judge_circle_overlap(circle1, circle2) == OVERLAP):
-                        main_object.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-                        circle2.append(circle1)
+        position_set = overlap_judge.generate_nan_overlap_position(SHAPE_TYPE, SHAPE_SIZE, NUM, X_RANGE, Y_RANGE)
+            
 
-                elif SHAPE_TYPE == "triangle":
-                    size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
-                    d1, d2, d3 = overlap_judge.triangle_get_point(x, y, size)
-                    tri1 = [d1, d2, d3]
-                    if(overlap_judge.judge_triangle_overlap(tri1, tri2) == OVERLAP):
-                        main_object.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-                        tri2.append(tri1)
 
-                elif SHAPE_TYPE == "rectangle":
-                    s_width, s_height = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
-                    rect1 = [x, y, s_width, s_height]
-                    if(overlap_judge.judge_rect_overlap(rect1, rect2) == OVERLAP):
-                        main_object.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
-                        rect2.append(rect1)
+    if SIZE:
+        for i in range(NUM):
+            if ROTATION:
+                angle = np.random.uniform(ROTATION_MIN, ROTATION_MAX)  # 図形の回転を一様分布から生成
+            else:
+                angle = 0
+            
+            if SHAPE_TYPE == "circle":
+                size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
+                main_object.add_shape(shape_type="circle", size=size, position=(position_set[i][0], position_set[i][1]), color=PATTERN_COLOR, angle=angle)
 
-        
-        else: 
-            rect1, rect2 = [], []
-            circle1, circle2 = [], []
-            tri1, tri2 = [], []
-            for _ in range(NUM):
-                x, y = generate_random_point(X_RANGE, Y_RANGE)  # 図形の位置を一様分布から生成
-                if ROTATION:
-                    angle = np.random.uniform(ROTATION_MIN, ROTATION_MAX)  # 図形の回転を一様分布から生成
-                else:
-                    angle = 0
+            elif SHAPE_TYPE == "triangle":
+                size = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
+                main_object.add_shape(shape_type="triangle", size=size, position=(position_set[i][0], position_set[i][1]), color=PATTERN_COLOR, angle=angle)
 
-                if SHAPE_TYPE == "circle":
-                    size = SHAPE_SIZE
-                    circle1 = [x, y, size]
-                    if(overlap_judge.judge_circle_overlap(circle1, circle2) == OVERLAP):
-                        main_object.add_shape(shape_type="circle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-                        circle2.append(circle1)
-                        
-                elif SHAPE_TYPE == "triangle":
-                    size = SHAPE_SIZE
-                    d1, d2, d3 = overlap_judge.triangle_get_point(x, y, size)
-                    tri1 = [d1, d2, d3]
-                    if(overlap_judge.judge_triangle_overlap(tri1, tri2) == OVERLAP):
-                        main_object.add_shape(shape_type="triangle", size=size, position=(x, y), color=PATTERN_COLOR, angle=angle)
-                        tri2.append(tri1)
+            elif SHAPE_TYPE == "rectangle":
+                s_width, s_height = generate_random_size(SHAPE_SIZE, SHAPE_TYPE)  # 図形のサイズを一様分布から生成
+                main_object.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(position_set[i][0], position_set[i][1]), color=PATTERN_COLOR, angle=angle)
 
-                elif SHAPE_TYPE == "rectangle":
-                    s_width, s_height = SHAPE_SIZE, SHAPE_SIZE
-                    rect1 = [x, y, s_width, s_height]
-                    if(overlap_judge.judge_rect_overlap(rect1, rect2) == OVERLAP):
-                        main_object.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(x, y), color=PATTERN_COLOR, angle=angle)
-                        rect2.append(rect1)
+    
+    else: 
+        for i in range(NUM):
+            if ROTATION:
+                angle = np.random.uniform(ROTATION_MIN, ROTATION_MAX)  # 図形の回転を一様分布から生成
+            else:
+                angle = 0
 
+            if SHAPE_TYPE == "circle":
+                size = SHAPE_SIZE
+                main_object.add_shape(shape_type="circle", size=size, position=(position_set[i][0], position_set[i][1]), color=PATTERN_COLOR, angle=angle)
+                    
+            elif SHAPE_TYPE == "triangle":
+                size = SHAPE_SIZE
+                main_object.add_shape(shape_type="triangle", size=size, position=(position_set[i][0], position_set[i][1]), color=PATTERN_COLOR, angle=angle)
+
+            elif SHAPE_TYPE == "rectangle":
+                s_width, s_height = SHAPE_SIZE, SHAPE_SIZE
+                main_object.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(position_set[i][0], position_set[i][1]), color=PATTERN_COLOR, angle=angle)
 
     # フォルダ名を生成
     output_name = f'{SHAPE_TYPE}_p-{PATTERN_COLOR}_bg-{BG_COLOR}_size-{SHAPE_SIZE}_sizerand-{SIZE}_rotationrand-{ROTATION}_{date_str}_{time_str}.png'

@@ -40,3 +40,54 @@ def triangle_get_point(x, y, size):
 
     return vertex1, vertex2, vertex3
 
+
+
+def generate_nan_overlap_position(shape, shape_size, num, x_range, y_range):
+
+    # shapeの中心座標
+    position_set = []
+    # 最初の1点をランダムにプロット
+    x1,y1 = generate_random_point(x_range, y_range, shape_size)
+    position_set.append([x1,y1])
+
+    # shapeによる場合分け
+    if shape == 'circle':
+        for i in range(num-1):
+            flag = True
+            try_count = 0
+
+            while flag:
+                # ランダムに点をプロット
+                x,y = generate_random_point(x_range, y_range, shape_size)
+                distance = []
+                for j in range(i+1):
+                    dis = (x - position_set[j][0])**2 + (y - position_set[j][1])**2
+                    distance.append(dis)
+                
+                if distance_check(distance, shape_size)==False:
+                    flag = False
+                    break                
+
+                try_count += 1     
+                if try_count>20:
+                    flag = False
+                    print("error")
+                    break
+
+            position_set.append([x,y])
+
+    return position_set
+
+
+def generate_random_point(x_range, y_range, size):
+    x = np.random.uniform(size/2, x_range-size/2)
+    y = np.random.uniform(size/2, y_range-size/2)
+    return x, y
+
+
+def distance_check(distance, criteria):
+    for i in range(len(distance)):
+        if distance[i] < criteria*2:
+            return True
+    return False    
+    
