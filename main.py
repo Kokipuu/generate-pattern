@@ -1,31 +1,19 @@
 import os
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle, Rectangle as MatplotlibRectangle, RegularPolygon
 import datetime
 import overlap_judge
 from generate_objects import GenerateObject
 import generate_objects
 
 
-#######################################################################################################################################
-
 """"保存先のディレクトリ設定"""
 # フォルダを生成するディレクトリのパスを指定
 output_directory = './pattern'  # your path
 
-# """生成パターンを日付に指定"""
 # 現在の日付と時間を取得
 current_datetime = datetime.datetime.now()
 date_str = current_datetime.strftime('%Y-%m-%d')
 time_str = current_datetime.strftime('%H-%M-%S')
-# # フォルダ名を生成
-# output_name = f'{date_str}_{time_str}.png'
-# # 保存先の絶対パスを生成
-# folder_path = os.path.join(output_directory, output_name)
-
-
-##################################################################################################################
 
 
 if __name__ == '__main__':
@@ -36,8 +24,8 @@ if __name__ == '__main__':
 
 
     """変更箇所 start"""
-    SHAPE_TYPE = "rectangle"   # 図形の選択
-    NUM = 300  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
+    SHAPE_TYPE = "circle"   # 図形の選択
+    NUM = 200  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
     SHAPE_SIZE = 0.5  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
     BG_COLOR = "gray"  # 背景の色

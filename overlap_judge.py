@@ -1,6 +1,4 @@
 import numpy as np
-import math
-from shapely.geometry import Polygon
 
 
 def generate_nan_overlap_position(shape, shape_size, num, x_range, y_range):
