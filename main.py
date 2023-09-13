@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
 
     # フォルダ名を生成
-    output_name = f'{SHAPE_TYPE}_p-{PATTERN_COLOR}_bg-{BG_COLOR}_size-{SHAPE_SIZE}_sizerand-{SIZE}_rotationrand-{ROTATION}_{date_str}_{time_str}.png'
+    output_name = f'{SHAPE_TYPE}_num-{NUM}_size-{SHAPE_SIZE}_p-{PATTERN_COLOR}_bg-{BG_COLOR}_sizerand-{SIZE}_rotationrand-{ROTATION}_{date_str}_{time_str}.png'
     # 保存先の絶対パスを生成
     folder_path = os.path.join(output_directory, output_name)
 
