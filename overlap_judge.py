@@ -96,3 +96,12 @@ def distance_check(distance, criteria):
             return True
     return False    
 
+
+########################################################################################################################
+
+def generate_overlap_position(shape, shape_size, num, x_range, y_range):
+    position_set = []
+    for _ in range(num):
+        x,y = generate_random_point(x_range, y_range, shape_size)
+        position_set.append([x,y])
+    return position_set

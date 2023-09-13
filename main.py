@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
 
     """変更箇所 start"""
-    SHAPE_TYPE = "circle"   # 図形の選択
+    SHAPE_TYPE = "rectangle"   # 図形の選択
     NUM = 200  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
     SHAPE_SIZE = 0.5  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
@@ -37,15 +37,11 @@ if __name__ == '__main__':
     OVERLAP = False  # patternが重ねる: True, 重ならない: False
     """変更箇所 end"""
 
-
     np.random.seed(SEED)  # 乱数のseedを固定
     main_object = GenerateObject(width=WIDTH, height=HEIGHT)  # 図形オブジェクトの作成
 
-    position_rectangle = []
-
-
     if OVERLAP:
-        pass
+        position_set = overlap_judge.generate_overlap_position(SHAPE_TYPE, SHAPE_SIZE, NUM, X_RANGE, Y_RANGE)
 
     else:
         position_set = overlap_judge.generate_nan_overlap_position(SHAPE_TYPE, SHAPE_SIZE, NUM, X_RANGE, Y_RANGE)
@@ -90,6 +86,7 @@ if __name__ == '__main__':
             elif SHAPE_TYPE == "rectangle":
                 s_width, s_height = SHAPE_SIZE, SHAPE_SIZE
                 main_object.add_shape(shape_type="rectangle", size=(s_width, s_height), position=(position_set[i][0], position_set[i][1]), color=PATTERN_COLOR, angle=angle)
+
 
     # フォルダ名を生成
     output_name = f'{SHAPE_TYPE}_p-{PATTERN_COLOR}_bg-{BG_COLOR}_size-{SHAPE_SIZE}_sizerand-{SIZE}_rotationrand-{ROTATION}_{date_str}_{time_str}.png'
