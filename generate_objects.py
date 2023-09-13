@@ -89,5 +89,3 @@ def generate_random_size(size, shape_type):
 
 def save_and_show_graph(output_path):
     plt.savefig(output_path)
-
-    print("11")
