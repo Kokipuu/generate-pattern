@@ -69,10 +69,10 @@ def generate_nan_overlap_position(shape, shape_size, num, x_range, y_range):
                     break                
 
                 try_count += 1     
-                if try_count>20:
-                    flag = False
-                    print("error")
-                    break
+                if try_count>50:
+                    print("cannot find suitable position.")
+                    print("Please decrease the number of the object or the size of the object. ")
+                    return "error"
 
             position_set.append([x,y])
 
