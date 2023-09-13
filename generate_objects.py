@@ -111,7 +111,7 @@ def save_and_show_graph(output_path):
 
 """"保存先のディレクトリ設定"""
 # フォルダを生成するディレクトリのパスを指定
-output_directory = 'C:/Users/puu02/Documents/03_JobHanting/summer_intern/Bosch/programm/generate_pattern/pattern'  # your path
+output_directory = './pattern'  # your path
 
 # """生成パターンを日付に指定"""
 # 現在の日付と時間を取得
@@ -143,9 +143,9 @@ if __name__ == '__main__':
     ROTATION_MIN = 0  # 回転の最小値 (deg)
     ROTATION_MAX = 90  # 回転の最大値 (deg)
 
-    ROTATION = True  # 回転する: True, 回転しない: False
+    ROTATION = False  # 回転する: True, 回転しない: False
     SIZE = False  # ランダムにサイズ変更: True, サイズ一定: False
-    OVERLAP = True  # patternが重ねる: True, 重ならない: False
+    OVERLAP = False  # patternが重ねる: True, 重ならない: False
     """変更箇所 end"""
 
 
