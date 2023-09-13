@@ -45,7 +45,6 @@ if __name__ == '__main__':
 
     else:
         position_set = overlap_judge.generate_nan_overlap_position(SHAPE_TYPE, SHAPE_SIZE, NUM, X_RANGE, Y_RANGE)
-            
 
 
     if SIZE:
