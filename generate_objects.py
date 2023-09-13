@@ -76,13 +76,6 @@ class GenerateObject:
         save_and_show_graph(output_path)
 
 
-
-def generate_random_point(x_range, y_range):
-    x = np.random.uniform(0, x_range)
-    y = np.random.uniform(0, y_range)
-    return x, y
-
-
 def generate_random_size(size, shape_type):
     if shape_type == "circle": 
         s = np.random.uniform(0, size)
@@ -135,8 +128,8 @@ if __name__ == '__main__':
 
 
     """変更箇所 start"""
-    SHAPE_TYPE = "circle"   # 図形の選択
-    NUM = 100  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
+    SHAPE_TYPE = "rectangle"   # 図形の選択
+    NUM = 300  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
     SHAPE_SIZE = 0.5  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
     BG_COLOR = "gray"  # 背景の色
