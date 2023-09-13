@@ -43,4 +43,3 @@ min_distance = 2 * radius
 circles = generate_random_non_overlapping_circles(num_circles, radius, rectangle_width, rectangle_height, min_distance)
 plot_circles_in_rectangle(circles, rectangle_width, rectangle_height)
 
-dkjsahfdkjsandksnd
