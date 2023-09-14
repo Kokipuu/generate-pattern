@@ -6,9 +6,11 @@ from matplotlib.patches import Circle, Rectangle as MatplotlibRectangle, Regular
 class GenerateObject:
 
     # A4サイズ, 図形の初期化
-    def __init__(self, width, height):
+    def __init__(self, width, height, vertical_repeat, horizontal_repeat):
         self.width = width
         self.height = height
+        self.vertical_repeat = vertical_repeat
+        self.horizontal_repeat = horizontal_repeat
         self.shapes = []
 
     # 図形の設定
@@ -38,35 +40,43 @@ class GenerateObject:
 
     # 図形の描画
     def draw(self, background_color, output_path):
-        fig, ax = plt.subplots(figsize=(self.width, self.height), dpi=100)
+        fig, axs = plt.subplots(self.horizontal_repeat, self.vertical_repeat, 
+                                figsize=(self.width/self.horizontal_repeat, self.height/self.vertical_repeat), 
+                                dpi=100)
+        fig.subplots_adjust(hspace=0, wspace=0)
         fig.set_facecolor(background_color)  # 背景色の設定
-        ax.set_xlim(0, self.width)
-        ax.set_ylim(0, self.height)
-        ax.axis("off")
 
-        for shape in self.shapes:
-            shape_type = shape["type"]
-            size = shape["size"]
-            position = shape["position"]
-            color = shape["color"]
-            angle = shape["angle"]
+        # 同じグラフを各サブプロットにプロットする
+        for ax in axs.flatten():
+            ax.set_xlim(0, self.width)
+            ax.set_ylim(0, self.height)
+            ax.axis("off")
+            # グラフの間隔を調整する
+            plt.tight_layout()
 
-            if shape_type == "circle":
-                circle = Circle(position, size, color=color)
-                ax.add_patch(circle)
+            for shape in self.shapes:
+                shape_type = shape["type"]
+                size = shape["size"]
+                position = shape["position"]
+                color = shape["color"]
+                angle = shape["angle"]
 
-            elif shape_type == "triangle":
-                triangle = RegularPolygon(position, numVertices=3, radius=size, orientation=angle, color=color)  # numVerticesを変えることで正三角形, 正方形, 正五角形...と変更できる
-                ax.add_patch(triangle)
+                if shape_type == "circle":
+                    circle = Circle(position, size, color=color)
+                    ax.add_patch(circle)
 
-            elif shape_type == "rectangle":
-                rect = MatplotlibRectangle((position[0] - size[0]/2, position[1] - size[1]/2), 
-                                           size[0], 
-                                           size[1], 
-                                           angle = angle, 
-                                           color=color, 
-                                           rotation_point=position)
-                ax.add_patch(rect)
+                elif shape_type == "triangle":
+                    triangle = RegularPolygon(position, numVertices=3, radius=size, orientation=angle, color=color)  # numVerticesを変えることで正三角形, 正方形, 正五角形...と変更できる
+                    ax.add_patch(triangle)
+
+                elif shape_type == "rectangle":
+                    rect = MatplotlibRectangle((position[0] - size[0]/2, position[1] - size[1]/2), 
+                                            size[0], 
+                                            size[1], 
+                                            angle = angle, 
+                                            color=color, 
+                                            rotation_point=position)
+                    ax.add_patch(rect)
 
         plt.gca().set_aspect('equal', adjustable='box')
         save_and_show_graph(output_path)

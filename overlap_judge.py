@@ -43,7 +43,7 @@ def generate_nan_overlap_position(shape, shape_size, num, x_range, y_range):
                 for j in range(i+1):
                     dis = (x - position_set[j][0])**2 + (y - position_set[j][1])**2
                     distance.append(dis)
-                
+
                 criteria = shape_size*2
                 if distance_check(distance, criteria)==False:
                     flag = False

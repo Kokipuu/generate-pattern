@@ -19,13 +19,15 @@ time_str = current_datetime.strftime('%H-%M-%S')
 if __name__ == '__main__':
 
     WIDTH, HEIGHT = 21, 29.7  # A4サイズ
+    # VERTICAL_REPEAT, HORIZONTAL_REPEAT = int(3), int(3)
+    REPEAT = int(2)
     X_RANGE, Y_RANGE = 21, 29.7  # 図形位置の乱数範囲
     SEED = 42  # 乱数のseed
 
 
     """変更箇所 start"""
-    SHAPE_TYPE = "rectangle"   # 図形の選択
-    NUM = 200  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
+    SHAPE_TYPE = "triangle"   # 図形の選択
+    NUM = 100  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
     SHAPE_SIZE = 0.5  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
     BG_COLOR = "gray"  # 背景の色
@@ -37,12 +39,13 @@ if __name__ == '__main__':
     OVERLAP = False  # patternが重ねる: True, 重ならない: False
     """変更箇所 end"""
 
+    SHAPE_SIZE = SHAPE_SIZE*REPEAT  # objectのスケール調整
     np.random.seed(SEED)  # 乱数のseedを固定
-    main_object = GenerateObject(width=WIDTH, height=HEIGHT)  # 図形オブジェクトの作成
+    main_object = GenerateObject(width=WIDTH, height=HEIGHT, 
+                                 vertical_repeat=REPEAT, horizontal_repeat=REPEAT)  # 図形オブジェクトの作成
 
     if OVERLAP:
         position_set = overlap_judge.generate_overlap_position(SHAPE_TYPE, SHAPE_SIZE, NUM, X_RANGE, Y_RANGE)
-
     else:
         position_set = overlap_judge.generate_nan_overlap_position(SHAPE_TYPE, SHAPE_SIZE, NUM, X_RANGE, Y_RANGE)
 
