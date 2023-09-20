@@ -10,12 +10,12 @@ WIDTH, HEIGHT = 21, 29.7
 
 fig, ax = plt.subplots(figsize=(WIDTH, HEIGHT), dpi=100)
 fig.subplots_adjust(left = 0, bottom= 0, right=1, top = 1)
-fig.set_facecolor("gray")  
+fig.set_facecolor("gray")
 ax.set_xlim(0, WIDTH)
 ax.set_ylim(0, HEIGHT)
 ax.axis("off")
 
-grid_n = 40
+grid_n = 30
 res = (grid_n, grid_n)
 dx = 1 / res[0]
 inv_dx = res[0]
@@ -62,13 +62,14 @@ def poisson_disk_sample(desired_samples: int) -> int:
 
 num_samples = poisson_disk_sample(desired_samples)
 for i in range(np.shape(samples)[0]):
-    samples[i] = [samples[i][0] * WIDTH, samples[i][1] * HEIGHT]
+    samples[i] = [samples[i][0] + WIDTH/2, samples[i][1] + HEIGHT/2]
+print(samples)
 # gui = ti.GUI("Poisson Disk Sampling", res=800, background_color=0xFFFFFF)
-for i in range(num_samples):    
+while(num_samples > 0):
+    
     circle = Circle((samples.to_numpy()[i][0], samples.to_numpy()[i][1]), radius=0.2, color="black")
     ax.add_patch(circle)
-count = 0
-speed = 300
+
 plt.gca().set_aspect('equal', adjustable='box')
 plt.savefig('.')
 
