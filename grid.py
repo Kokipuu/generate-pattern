@@ -7,6 +7,7 @@ from matplotlib.patches import Circle
 ti.init(arch=ti.cpu)
 
 WIDTH, HEIGHT = 21, 29.7
+flag, flag1 = 0, 0
 
 fig, ax = plt.subplots(figsize=(WIDTH, HEIGHT), dpi=100)
 fig.subplots_adjust(left = 0, bottom= 0, right=1, top = 1)
@@ -62,13 +63,20 @@ def poisson_disk_sample(desired_samples: int) -> int:
 
 num_samples = poisson_disk_sample(desired_samples)
 for i in range(np.shape(samples)[0]):
-    samples[i] = [samples[i][0] + WIDTH/2, samples[i][1] + HEIGHT/2]
+    samples[i] = [samples[i][0] * WIDTH, samples[i][1] * HEIGHT]
 print(samples)
 # gui = ti.GUI("Poisson Disk Sampling", res=800, background_color=0xFFFFFF)
-while(num_samples > 0):
-    
-    circle = Circle((samples.to_numpy()[i][0], samples.to_numpy()[i][1]), radius=0.2, color="black")
-    ax.add_patch(circle)
+i = 0
+while(i < num_samples):
+    for j in range(i):
+        if check_collision((samples.to_numpy()[i][0], samples.to_numpy()[i][1]), (samples.to_numpy()[j][0], samples.to_numpy()[j][1])) is False:
+            flag1 += 1
+            if(flag == 100):
+                break
+        else:
+            circle = Circle((samples.to_numpy()[i][0], samples.to_numpy()[i][1]), radius=0.2, color="black")
+            ax.add_patch(circle)
+            i += 1
 
 plt.gca().set_aspect('equal', adjustable='box')
 plt.savefig('.')
