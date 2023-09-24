@@ -89,7 +89,7 @@ while i < 1000:
 
 
 plt.gca().set_aspect('equal', adjustable='box')
-plt.savefig('img')
+plt.savefig('.')
 
 
 # plt.gca().set_aspect('equal', adjustable='box')
