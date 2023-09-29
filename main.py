@@ -26,9 +26,9 @@ if __name__ == '__main__':
 
 
     """変更箇所 start"""
-    SHAPE_TYPE = "triangle"   # 図形の選択
-    NUM = 100  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
-    SHAPE_SIZE = 0.5  # 図形のサイズ
+    SHAPE_TYPE = "rectangle"   # 図形の選択: circle, triangle, rectangle
+    NUM = 900  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
+    SHAPE_SIZE = 0.4  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
     BG_COLOR = "gray"  # 背景の色
     ROTATION_MIN = 0  # 回転の最小値 (deg)
