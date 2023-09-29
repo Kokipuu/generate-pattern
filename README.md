@@ -1,13 +1,20 @@
 # generate-pattern
 
-円や三角形、四角形を多数含む画像を生成する。
+Diaprity mapを検証するための画像を出力する．
+変更パラメータは以下の通りである．
 
-## 要件
+    """変更箇所 start"""
+    SHAPE_TYPE = "rectangle"   # 図形の選択: circle, triangle, rectangle
+    NUM = 900  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
+    SHAPE_SIZE = 0.4  # 図形のサイズ
+    PATTERN_COLOR = "black"  # パターンの色
+    BG_COLOR = "gray"  # 背景の色
+    ROTATION_MIN = 0  # 回転の最小値 (deg)
+    ROTATION_MAX = 90  # 回転の最大値 (deg)
 
-1. 円、三角形、四角形が生成できる
-2. 回転できる
-3. サイズを指定できる
-4. 色を変えることができる
-5. 線の種類をけることができる(太さ含む)
-6. オーバーラップを指定できる
-7. 変な形でも上記の要件を満たす。
+    ROTATION = False  # 回転する: True, 回転しない: False
+    SIZE = False  # ランダムにサイズ変更: True, サイズ一定: False
+    OVERLAP = False  # patternが重ねる: True, 重ならない: False
+    """変更箇所 end"""
+
+

@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
 
     """変更箇所 start"""
-    SHAPE_TYPE = "rectangle"   # 図形の選択
+    SHAPE_TYPE = "rectangle"   # 図形の選択: circle, triangle, rectangle
     NUM = 200  # 図形の目安個数(OVERLAP=Falseのときは描けない場合あり)
     SHAPE_SIZE = 0.5  # 図形のサイズ
     PATTERN_COLOR = "black"  # パターンの色
